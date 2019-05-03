@@ -16,6 +16,8 @@ STD_LOG_ARG=''
 # Set up and configure nginx
 configure_nginx()
 {
+  eval echo "[+] Configuring nginx..." ${STD_LOG_ARG}
+
   # Copy in our site config(s)
   cp ${SCRIPT_DIR}/../etc/nginx/*.conf /etc/nginx/conf.d/
 
@@ -30,12 +32,17 @@ configure_nginx()
 # Output final information about the installation
 finalize_message()
 {
-
+  eval echo "[+] The media-portal-badge stack is now installed and ready to go." ${STD_LOG_ARG}
+  eval echo "[+] To alter which media to serve check these variables in the /etc/systemd/system/random_media_portal.service file:" ${STD_LOG_ARG}
+  eval echo "[+]     MEDIA_DIR              path containing media for the portal (default: '/data')" ${STD_LOG_ARG}
+  eval echo "[+]     MEDIA_MODE             display mode for the portal (default: 'video')" ${STD_LOG_ARG}
 }
 
 # Install dependencies
 install_dependencies()
 {
+  eval echo "[+] Installing core toolchain..." ${STD_LOG_ARG}
+
   # Install core tools
   apt-get update
   apt-get install -y \
@@ -55,6 +62,8 @@ install_dependencies()
 # Install the random-media-portal
 install_random_media_portal()
 {
+  eval echo "[+] Installing the random-media-portal..." ${STD_LOG_ARG}
+
   # Change to a directory for optional software
   cd /opt
   
@@ -79,6 +88,8 @@ install_random_media_portal()
 # Upgrade the system
 upgrade_system()
 {
+  eval echo "[+] Upgrading system..." ${STD_LOG_ARG}
+
   apt-get update
   apt-get upgrade -y
   apt-get dist-upgrade -y
@@ -99,8 +110,6 @@ usage()
   echo "[+] Usage: [Environment Variables] ./install.sh [-hL]"
   echo "[+]   Environment Variables:"
   echo "[+]     LOG_PATH               path for logs (default: '/var/root/log')"
-#  echo "[+]     MEDIA_DIR              path containing media for the portal (default: '/data')"
-#  echo "[+]     MEDIA_MODE             display mode for the portal (default: 'video')"
   echo "[+]     RANDOM_MEDIA_PORTAL    HTTP clone target for the random-media-portal (default: https://gitlab.com/frozenfoxx/random-media-portal.git)"
   echo "[+]   Options:"
   echo "[+]     -h | --help            display this usage information"
