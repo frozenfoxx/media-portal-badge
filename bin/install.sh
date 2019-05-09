@@ -77,6 +77,7 @@ install_random_media_portal()
 
   # Install the service file
   cp ${SCRIPT_DIR}/../etc/systemd/system/random_media_portal.service /etc/systemd/system/
+  cp ${SCRIPT_DIR}/../etc/systemd/random_media_portal.env /etc/systemd/
   systemctl daemon-reload
   systemctl start random_media_portal.service
   systemctl enable random_media_portal.service
