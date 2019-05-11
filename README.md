@@ -7,7 +7,7 @@ A captive media portal badge stack.
 * [Git](https://git-scm.com/)
 * [Ruby](https://www.ruby-lang.org/en/)
 * [Bundler](https://bundler.io/)
-* [ISC DHCP Server](https://www.isc.org/downloads/dhcp/)
+* [dnsmasq]()
 
 # Installation
 
@@ -18,4 +18,4 @@ A captive media portal badge stack.
 
 # Acknowledgements
 
-* [samyk](https://samy.pl/) for the awesome [PoisonTap](https://github.com/samyk/poisontap) which gave me the idea for the DHCP server and a great `dhcpd.conf` to follow.
+* [samyk](https://samy.pl/) for the awesome [PoisonTap](https://github.com/samyk/poisontap) which gave me the idea for the DHCP server.
