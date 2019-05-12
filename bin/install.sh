@@ -13,6 +13,20 @@ STD_LOG_ARG=''
 
 # Functions
 
+# Set up and configure dnsmasq
+configure_dnsmasq()
+{
+  eval echo "[+] Configuring dnsmasq..." ${STD_LOG_ARG}
+
+}
+
+# Set up and configure hostapd
+configure_hostapd()
+{
+  eval echo "[+] Configuring hostapd..." ${STD_LOG_ARG}
+
+}
+
 # Set up and configure nginx
 configure_nginx()
 {
@@ -134,4 +148,6 @@ upgrade_system
 install_dependencies
 install_random_media_portal
 configure_nginx
+configure_hostapd
+configure_dnsmasq
 finalize_message
