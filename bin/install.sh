@@ -13,11 +13,29 @@ STD_LOG_ARG=''
 
 # Functions
 
+# Configure dhcpcd
+configure_dhcpcd()
+{
+  eval echo "[+] Configuring dhcpcd..." ${STD_LOG_ARG}
+
+  # Backup original config and install our own
+  mv /etc/dhcpcd.conf /etc/dhcpcd.conf.orig
+  cp ${SCRIPT_DIR}/../etc/dhcpcd.conf /etc/dhcpcd.conf
+
+  # Restart networking to take effect
+  service dhcpcd restart
+  ifdown wlan0
+  ifup wlan0
+}
+
 # Set up and configure dnsmasq
 configure_dnsmasq()
 {
   eval echo "[+] Configuring dnsmasq..." ${STD_LOG_ARG}
 
+  # Backup original config and install our own
+  mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
+  cp ${SCRIPT_DIR}/../etc/dnsmasq.conf /etc/dnsmasq.conf
 }
 
 # Set up and configure hostapd
@@ -86,12 +104,13 @@ install_random_media_portal()
   cd random-media-portal
   bundle install --system
 
-  # Change back to the script directory
-  cd ${SCRIPT_DIR}
-
   # Install the service file
   cp ${SCRIPT_DIR}/../etc/systemd/system/random_media_portal.service /etc/systemd/system/
   cp ${SCRIPT_DIR}/../etc/systemd/random_media_portal.env /etc/systemd/
+
+  # FIXME: substitute environment variables
+
+  # Reload the service
   systemctl daemon-reload
   systemctl start random_media_portal.service
   systemctl enable random_media_portal.service
@@ -148,6 +167,7 @@ upgrade_system
 install_dependencies
 install_random_media_portal
 configure_nginx
+configure_dhcpcd
 configure_hostapd
 configure_dnsmasq
 finalize_message
