@@ -43,6 +43,13 @@ configure_hostapd()
 {
   eval echo "[+] Configuring hostapd..." ${STD_LOG_ARG}
 
+  # Backup original config and install our own
+  mv /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.orig
+  cp ${SCRIPT_DIR}/../etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf
+
+  # Specify a default config for hostapd
+  rm /etc/default/hostapd
+  cp ${SCRIPT_DIR}/../etc/default/hostapd /etc/default/hostapd
 }
 
 # Set up and configure nginx
