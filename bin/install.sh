@@ -47,7 +47,10 @@ configure_hostapd()
   eval echo "[+] Configuring hostapd..." ${STD_LOG_ARG}
 
   # Backup original config and install our own
-  mv /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.orig
+  if [[ -f /etc/hostapd/hostapd.conf ]]; then
+    mv /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.orig
+  fi
+  
   cp ${SCRIPT_DIR}/../etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf
 
   # Specify a default config for hostapd
@@ -67,7 +70,9 @@ configure_nginx()
   cp ${SCRIPT_DIR}/../etc/nginx/*.conf /etc/nginx/conf.d/
 
   # Disable the default welcome
-  mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.disabled
+  if [[ -f /etc/nginx/conf.d/default.conf ]]; then
+    mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.disabled
+  fi
 
   # Start the service
   systemctl start nginx
@@ -77,6 +82,8 @@ configure_nginx()
 # Enable IPv4 forwarding
 enable_forwarding()
 {
+  eval echo "[+] Enabling IPv4 forwarding..." ${STD_LOG_ARG}
+
   sed -i '/^#net\.ipv4\.ip_forward=1$/s/^#//' /etc/sysctl.conf
 }
 
@@ -84,9 +91,9 @@ enable_forwarding()
 finalize_message()
 {
   eval echo "[+] The media-portal-badge stack is now installed and ready to go." ${STD_LOG_ARG}
-  eval echo "[+] To alter which media to serve check these variables in the /etc/systemd/system/random_media_portal.service file:" ${STD_LOG_ARG}
-  eval echo "[+]     MEDIA_DIR              path containing media for the portal (default: '/data')" ${STD_LOG_ARG}
-  eval echo "[+]     MEDIA_MODE             display mode for the portal (default: 'video')" ${STD_LOG_ARG}
+  eval echo "[+] To alter which media to serve check these variables in the /etc/systemd/system/random_media_portal.service file" ${STD_LOG_ARG}
+  eval echo "[+]     MEDIA_DIR              path containing media for the portal" ${STD_LOG_ARG}
+  eval echo "[+]     MEDIA_MODE             display mode for the portal" ${STD_LOG_ARG}
 }
 
 # Install dependencies
