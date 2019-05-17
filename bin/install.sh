@@ -36,6 +36,9 @@ configure_dnsmasq()
   # Backup original config and install our own
   mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
   cp ${SCRIPT_DIR}/../etc/dnsmasq.conf /etc/dnsmasq.conf
+
+  # Enable the service at boot
+  update-rc.d dnsmasq defaults
 }
 
 # Set up and configure hostapd
@@ -50,6 +53,9 @@ configure_hostapd()
   # Specify a default config for hostapd
   rm /etc/default/hostapd
   cp ${SCRIPT_DIR}/../etc/default/hostapd /etc/default/hostapd
+
+  # Enable the service at boot
+  update-rc.d hostapd defaults
 }
 
 # Set up and configure nginx
