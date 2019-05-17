@@ -7,7 +7,7 @@ MEDIA_DIR=${MEDIA_DIR:-"/data"}
 MEDIA_MODE=${MEDIA_MODE:-"video"}
 RANDOM_MEDIA_PORTAL=${RANDOM_MEDIA_PORTAL:-"https://gitlab.com/frozenfoxx/random-media-portal.git"}
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-LOG_PATH=${LOG_PATH:-"/var/root/log"}
+LOG_PATH=${LOG_PATH:-"/var/log"}
 STD_LOG='media_portal_badge_install.log'
 STD_LOG_ARG=''
 
@@ -162,7 +162,7 @@ usage()
 {
   echo "[+] Usage: [Environment Variables] ./install.sh [-hL]"
   echo "[+]   Environment Variables:"
-  echo "[+]     LOG_PATH               path for logs (default: '/var/root/log')"
+  echo "[+]     LOG_PATH               path for logs (default: '/var/log')"
   echo "[+]     RANDOM_MEDIA_PORTAL    HTTP clone target for the random-media-portal (default: https://gitlab.com/frozenfoxx/random-media-portal.git)"
   echo "[+]   Options:"
   echo "[+]     -h | --help            display this usage information"
