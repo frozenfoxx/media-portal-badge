@@ -68,6 +68,12 @@ configure_nginx()
   systemctl enable nginx
 }
 
+# Enable IPv4 forwarding
+enable_forwarding()
+{
+  sed -i '/^#net\.ipv4\.ip_forward=1$/s/^#//' /etc/sysctl.conf
+}
+
 # Output final information about the installation
 finalize_message()
 {
@@ -176,5 +182,6 @@ install_random_media_portal
 configure_nginx
 configure_dhcpcd
 configure_hostapd
+enable_forwarding
 configure_dnsmasq
 finalize_message
