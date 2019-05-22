@@ -24,8 +24,8 @@ configure_dhcpcd()
 
   # Restart networking to take effect
   service dhcpcd restart
-  ifdown wlan0
-  ifup wlan0
+  ip link set wlan0 down
+  ip link set wlan0 up
 }
 
 # Set up and configure dnsmasq
