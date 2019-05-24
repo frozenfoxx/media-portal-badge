@@ -38,7 +38,7 @@ configure_dnsmasq()
   cp ${SCRIPT_DIR}/../etc/dnsmasq.conf /etc/dnsmasq.conf
 
   # Enable the service at boot
-  update-rc.d dnsmasq defaults
+  systemctl enable dnsmasq
 }
 
 # Set up and configure hostapd
@@ -58,7 +58,7 @@ configure_hostapd()
   cp ${SCRIPT_DIR}/../etc/default/hostapd /etc/default/hostapd
 
   # Enable the service at boot
-  update-rc.d hostapd defaults
+  systemctl enable hostapd
 }
 
 # Set up and configure nginx
