@@ -167,13 +167,13 @@ set_logging()
 # Display usage information
 usage()
 {
-  echo "[+] Usage: [Environment Variables] ./install.sh [-hL]"
-  echo "[+]   Environment Variables:"
-  echo "[+]     LOG_PATH               path for logs (default: '/var/log')"
-  echo "[+]     RANDOM_MEDIA_PORTAL    HTTP clone target for the random-media-portal (default: https://gitlab.com/frozenfoxx/random-media-portal.git)"
-  echo "[+]   Options:"
-  echo "[+]     -h | --help            display this usage information"
-  echo "[+]     -L | --Log             enable logging (target: '[LOG_PATH]/media_portal_badge_install.log')"
+  echo "Usage: [Environment Variables] ./install.sh [-hL]"
+  echo "  Environment Variables:"
+  echo "    LOG_PATH               path for logs (default: '/var/log')"
+  echo "    RANDOM_MEDIA_PORTAL    HTTP clone target for the random-media-portal (default: https://gitlab.com/frozenfoxx/random-media-portal.git)"
+  echo "  Options:"
+  echo "    -h | --help            display this usage information"
+  echo "    -L | --Log             enable logging (target: '[LOG_PATH]/media_portal_badge_install.log')"
 }
 
 # Logic
