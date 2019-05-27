@@ -52,6 +52,7 @@ configure_hostapd()
   fi
   
   cp ${SCRIPT_DIR}/../etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf
+  chmod 640 /etc/hostapd/hostapd.conf
 
   # Specify a default config for hostapd
   rm /etc/default/hostapd
@@ -62,17 +63,28 @@ configure_hostapd()
   systemctl enable hostapd
 }
 
+# Set up the network devices
+configure_network()
+{
+  eval echo "[+] Configuring network devices..." ${STD_LOG_ARG}
+
+  cp ${SCRIPT_DIR}/../etc/network/interfaces.d/wlan0 /etc/network/interfaces.d/wlan0
+}
+
 # Set up and configure nginx
 configure_nginx()
 {
   eval echo "[+] Configuring nginx..." ${STD_LOG_ARG}
 
   # Copy in our site config(s)
-  cp ${SCRIPT_DIR}/../etc/nginx/*.conf /etc/nginx/conf.d/
+  cp ${SCRIPT_DIR}/../etc/nginx/sites-available/*.conf /etc/nginx/sites-available/
+
+  # Enable the new site
+  ln -s /etc/nginx/sites-available/inter.net.conf /etc/nginx/sites-enabled/inter.net.conf
 
   # Disable the default welcome
-  if [[ -f /etc/nginx/conf.d/default.conf ]]; then
-    mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.disabled
+  if [[ -f /etc/nginx/sites-enabled/default ]]; then
+    rm /etc/nginx/sites-enabled/default
   fi
 
   # Start the service
@@ -194,6 +206,7 @@ upgrade_system
 install_dependencies
 install_random_media_portal
 configure_nginx
+configure_network
 configure_dhcpcd
 configure_hostapd
 enable_forwarding
