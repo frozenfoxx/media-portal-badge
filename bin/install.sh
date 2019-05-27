@@ -58,6 +58,7 @@ configure_hostapd()
   cp ${SCRIPT_DIR}/../etc/default/hostapd /etc/default/hostapd
 
   # Enable the service at boot
+  systemctl unmask hostapd
   systemctl enable hostapd
 }
 
