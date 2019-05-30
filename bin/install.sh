@@ -97,7 +97,17 @@ enable_forwarding()
 {
   eval echo "[+] Enabling IPv4 forwarding..." ${STD_LOG_ARG}
 
-  sed -i '/^#net\.ipv4\.ip_forward=1$/s/^#//' /etc/sysctl.conf
+  if [[ $(grep -e '^#net\.ipv4\.ip_forward=1$') ]]; then
+    sed -i '/^#net\.ipv4\.ip_forward=1$/s/^#//' /etc/sysctl.conf
+  else
+    echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf
+  fi
+
+  if [[ $(grep -e '^#net\.ipv4\.conf\.all\.route_localnet=1$' /etc/sysctl.conf) ]] ; then
+    sed -i '/^#net\.ipv4\.conf\.all\.route_localnet=1$/s/^#//' /etc/sysctl.conf
+  else
+    echo net.ipv4.conf.all.route_localnet=1 >> /etc/sysctl.conf
+  fi
 }
 
 # Output final information about the installation
