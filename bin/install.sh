@@ -23,9 +23,9 @@ configure_dhcpcd()
   cp ${SCRIPT_DIR}/../etc/dhcpcd.conf /etc/dhcpcd.conf
 
   # Restart networking to take effect
-  service dhcpcd restart
-  ip link set wlan0 down
-  ip link set wlan0 up
+  # service dhcpcd restart
+  # ip link set wlan0 down
+  # ip link set wlan0 up
 }
 
 # Set up and configure dnsmasq
@@ -151,7 +151,6 @@ install_random_media_portal()
 
   # Reload the service
   systemctl daemon-reload
-  systemctl start random_media_portal.service
   systemctl enable random_media_portal.service
 
   # Change back to the script directory
