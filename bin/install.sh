@@ -69,6 +69,11 @@ configure_network()
   eval echo "[+] Configuring network devices..." ${STD_LOG_ARG}
 
   cp ${SCRIPT_DIR}/../etc/network/interfaces.d/wlan0 /etc/network/interfaces.d/wlan0
+
+  eval echo "[+] Updating hosts..." ${STD_LOG_ARG}
+  
+  sed -i '/^192\.168\.4\.1.*$/d' /etc/hosts
+  echo "192.168.4.1 ${HOSTNAME}" >> /etc/hosts
 }
 
 # Set up and configure nginx
