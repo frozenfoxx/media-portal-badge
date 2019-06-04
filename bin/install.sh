@@ -102,12 +102,13 @@ enable_forwarding()
 {
   eval echo "[+] Enabling IPv4 forwarding..." ${STD_LOG_ARG}
 
-  if [[ $(grep -e '^#net\.ipv4\.ip_forward=1$') ]]; then
+  if [[ $(grep -e '^#net\.ipv4\.ip_forward=1$' /etc/sysctl.conf) ]]; then
     sed -i '/^#net\.ipv4\.ip_forward=1$/s/^#//' /etc/sysctl.conf
   else
     echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf
   fi
 
+  eval echo "[+] Enabling localnet routing..." ${STD_LOG_ARG}
   if [[ $(grep -e '^#net\.ipv4\.conf\.all\.route_localnet=1$' /etc/sysctl.conf) ]] ; then
     sed -i '/^#net\.ipv4\.conf\.all\.route_localnet=1$/s/^#//' /etc/sysctl.conf
   else
@@ -119,7 +120,7 @@ enable_forwarding()
 finalize_message()
 {
   eval echo "[+] The media-portal-badge stack is now installed and ready to go." ${STD_LOG_ARG}
-  eval echo "[+] To alter which media to serve check these variables in the /etc/systemd/system/random_media_portal.service file" ${STD_LOG_ARG}
+  eval echo "[+] To alter which media to serve check these variables in the /etc/systemd/system/random-media-portal.service file" ${STD_LOG_ARG}
   eval echo "[+]     MEDIA_DIR              path containing media for the portal" ${STD_LOG_ARG}
   eval echo "[+]     MEDIA_MODE             display mode for the portal" ${STD_LOG_ARG}
 }
@@ -159,14 +160,14 @@ install_random_media_portal()
   bundle install --system
 
   # Install the service file
-  cp ${SCRIPT_DIR}/../etc/systemd/system/random_media_portal.service /etc/systemd/system/
-  cp ${SCRIPT_DIR}/../etc/systemd/random_media_portal.env /etc/systemd/
+  cp ${SCRIPT_DIR}/../etc/systemd/system/random-media-portal.service /etc/systemd/system/
+  cp ${SCRIPT_DIR}/../etc/systemd/random-media-portal.env /etc/systemd/
 
   # FIXME: substitute environment variables
 
   # Reload the service
   systemctl daemon-reload
-  systemctl enable random_media_portal.service
+  systemctl enable random-media-portal.service
 
   # Change back to the script directory
   cd ${SCRIPT_DIR}
