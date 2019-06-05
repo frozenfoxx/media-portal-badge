@@ -79,13 +79,27 @@ configure_network()
 # Set up and configure nginx
 configure_nginx()
 {
+  eval echo "[+] Generating self-signed SSL certificate..." ${STD_LOG_ARG}
+  cp ${SCRIPT_DIR}/../root/localhost.openssl.conf /root/
+
+  # Create the certificate and key
+  cd /root
+  openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout localhost.key -out localhost.crt -config localhost.conf
+
+  # Move those to the SSL directory
+  mv localhost.crt /etc/ssl/certs/
+  mv localhost.key /etc/ssl/private/localhost.key
+
+  # Change back to the script directory
+  cd ${SCRIPT_DIR}
+
   eval echo "[+] Configuring nginx..." ${STD_LOG_ARG}
 
   # Copy in our site config(s)
   cp ${SCRIPT_DIR}/../etc/nginx/sites-available/*.conf /etc/nginx/sites-available/
 
   # Enable the new site
-  ln -s /etc/nginx/sites-available/inter.net.conf /etc/nginx/sites-enabled/inter.net.conf
+  ln -s /etc/nginx/sites-available/localhost.conf /etc/nginx/sites-enabled/localhost.conf
 
   # Disable the default welcome
   if [[ -f /etc/nginx/sites-enabled/default ]]; then
