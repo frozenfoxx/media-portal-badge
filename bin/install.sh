@@ -84,7 +84,7 @@ configure_nginx()
 
   # Create the certificate and key
   cd /root
-  openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout localhost.key -out localhost.crt -config localhost.conf
+  openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout localhost.key -out localhost.crt -config localhost.openssl.conf
 
   # Move those to the SSL directory
   mv localhost.crt /etc/ssl/certs/
