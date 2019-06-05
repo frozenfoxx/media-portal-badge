@@ -7,7 +7,7 @@ A captive media portal badge stack.
 * [Git](https://git-scm.com/)
 * [Ruby](https://www.ruby-lang.org/en/)
 * [Bundler](https://bundler.io/)
-* [dnsmasq]()
+* [dnsmasq](http://www.thekelleys.org.uk/dnsmasq/doc.html)
 
 # Installation
 
