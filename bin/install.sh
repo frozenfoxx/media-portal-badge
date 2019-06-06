@@ -13,6 +13,15 @@ STD_LOG_ARG=''
 
 # Functions
 
+# Check if the script is running as root
+check_root()
+{
+  if [[ $EUID -ne 0 ]]; then
+    eval echo "[!] This script must be run as root." ${STD_LOG_ARG}
+    exit 1
+  fi
+}
+
 # Configure dhcpcd
 configure_dhcpcd()
 {
@@ -231,6 +240,7 @@ while [ "$1" != "" ]; do
   shift
 done
 
+check_root
 upgrade_system
 install_dependencies
 install_random_media_portal
