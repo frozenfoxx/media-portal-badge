@@ -134,7 +134,7 @@ enable_forwarding()
 finalize_message()
 {
   eval echo "[+] The media-portal-badge stack is now installed and ready to go." ${STD_LOG_ARG}
-  eval echo "[+] To alter which media to serve check these variables in the /etc/systemd/system/random-media-portal.service file" ${STD_LOG_ARG}
+  eval echo "[+] To alter which media to serve check these variables in the /etc/systemd/random-media-portal.env file" ${STD_LOG_ARG}
   eval echo "[+]     MEDIA_DIR              path containing media for the portal" ${STD_LOG_ARG}
   eval echo "[+]     MEDIA_MODE             display mode for the portal" ${STD_LOG_ARG}
 }
