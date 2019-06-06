@@ -24,4 +24,4 @@ This directory contains scripts and tools intended to ease deployment onto a Ras
 * When booted, execute `ssh -i ~/.ssh/[Private Key] pi@[Hostname]`.
 * From there you will likely wish to update the password for the `pi` user as well as update the keymap if UK is not appropriate for you.
 * Become `root` (`sudo su -` will suffice).
-* Run the installer as usual (`cd /root/media-portal-badge/bin/ && ./install.sh`)
+* Run the installer as usual (`cd /home/pi/media-portal-badge/bin/ && ./install.sh`)
