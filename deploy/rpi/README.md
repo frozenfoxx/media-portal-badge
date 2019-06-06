@@ -1,10 +1,12 @@
 # Raspberry Pi Deployment
 
 This directory contains scripts and tools intended to ease deployment onto a Raspberry Pi. Follow these directions to get this working on any Raspberry Pi with onboard WiFi.
+
 # Requirements
 
 * [BalenaEtcher](https://www.balena.io/etcher/).
 * A Linux system.
+* `whiptail`
 * A MicroSD card.
 * A Raspberry Pi with onboard WiFi.
 * A local WiFi network.
