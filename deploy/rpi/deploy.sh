@@ -5,9 +5,6 @@ PLATFORM=$(uname -s)
 MYUSER=$(whoami)
 RANDOM_MEDIA_PORTAL=${RANDOM_MEDIA_PORTAL:-"https://gitlab.com/frozenfoxx/random-media-portal.git"}
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-LOG_PATH=${LOG_PATH:-"${SCRIPT_DIR}"}
-STD_LOG='media_portal_badge_deployment.log'
-STD_LOG_ARG=''
 
 # Functions
 
@@ -18,11 +15,11 @@ configure_hostname()
 
   # Check for if the user cancelled
   if [[ ${DEPLOY_HOSTNAME} == '' ]]; then
-    eval echo "[!] No hostname entered, terminating..." ${STD_LOG_ARG}
+    eval echo "[!] No hostname entered, terminating..."
     exit 1
   fi
 
-  eval echo "[+] Setting hostname..." ${STD_LOG_ARG}
+  echo "[+] Setting hostname..."
   sudo sed -i "s/raspberrypi/${DEPLOY_HOSTNAME}/g" /media/${MYUSER}/rootfs/etc/hosts
   sudo sed -i "s/raspberrypi/${DEPLOY_HOSTNAME}/g" /media/${MYUSER}/rootfs/etc/hostname
   echo ${DEPLOY_HOSTNAME} > /media/${MYUSER}/boot/hostnames
@@ -31,7 +28,7 @@ configure_hostname()
 # Ensure SSH is enabled at boot
 configure_ssh()
 {
-  eval echo "[+] Enabling SSH at boot..." ${STD_LOG_ARG}
+  echo "[+] Enabling SSH at boot..."
   touch /media/${MYUSER}/boot/ssh
 }
 
@@ -42,17 +39,17 @@ configure_user()
 
   # Check for if the user cancelled
   if [[ ${AUTHORIZED_KEYS} == '' ]]; then
-    eval echo "[!] No public key entered, terminating..." ${STD_LOG_ARG}
+    echo "[!] No public key entered, terminating..."
     exit 1
   fi
 
   # Check to see if the file exists
   if ! [[ -f ${AUTHORIZED_KEYS} ]]; then
-    eval echo "[!] The provided key location doesn't exist, terminating..." ${STD_LOG_ARG}
+    echo "[!] The provided key location doesn't exist, terminating..."
     exit 1
   fi
 
-  eval echo "[+] Copying over the provided public key for the pi user..." ${STD_LOG_ARG}
+  echo "[+] Copying over the provided public key for the pi user..."
   mkdir /media/${MYUSER}/rootfs/home/pi/.ssh
   chmod 700 /media/${MYUSER}/rootfs/home/pi/.ssh
   cp ${AUTHORIZED_KEYS} /media/${MYUSER}/rootfs/home/pi/.ssh/authorized_keys
@@ -66,7 +63,7 @@ configure_wifi()
 
   # Check for if the user cancelled
   if [[ ${DEPLOY_SSID} == '' ]]; then
-    eval echo "[!] No local network SSID entered, terminating..." ${STD_LOG_ARG}
+    echo "[!] No local network SSID entered, terminating..."
     exit 1
   fi
 
@@ -78,19 +75,19 @@ configure_wifi()
 # Copy over data files
 deploy_data()
 {
-  eval echo "[+] Copying over data..." ${STD_LOG_ARG}
+  echo "[+] Copying over data..."
 
   sudo mkdir /media/${MYUSER}/rootfs/data
   sudo cp data/* /media/${MYUSER}/rootfs/data/
 
-  eval echo "[+] Syncing. This might take a minute..." ${STD_LOG_ARG}
+  echo "[+] Syncing. This might take a minute..."
   sync
 }
 
 # Clone the media-portal-badge code onto the system
 deploy_media_portal_badge()
 {
-  eval echo "[+] Cloning latest random-media-portal..." ${STD_LOG_ARG}
+  echo "[+] Cloning latest random-media-portal..."
 
   git clone ${RANDOM_MEDIA_PORTAL} /media/${MYUSER}/rootfs/home/pi/random-media-portal
 }
@@ -98,36 +95,27 @@ deploy_media_portal_badge()
 # Show the user what must be done next
 display_further_instructions()
 {
-  eval echo "[+] The media-portal-badge is now almost complete. To complete installation perform the following:" ${STD_LOG_ARG}
-  eval echo "[+]   * Insert the microSD card into the Raspberry Pi." ${STD_LOG_ARG}
-  eval echo "[+]   * Power on the Raspberry Pi." ${STD_LOG_ARG}
-  eval echo "[+]   * ssh -i [path to private key] pi@[hostname].local" ${STD_LOG_ARG}
-  eval echo "[+]   * (RPi) sudo su - " ${STD_LOG_ARG}
-  eval echo "[+]   * (RPi) raspi-config" ${STD_LOG_ARG}
-  eval echo "[+]   * (RPi) Update the keymap/locale (likely US)." ${STD_LOG_ARG}
-  eval echo "[+]   * (RPi) Update the pi user's password." ${STD_LOG_ARG}
-  eval echo "[+]   * (RPi) cd /home/pi/media-portal-badge/bin && ./install.sh" ${STD_LOG_ARG}
-  eval echo "[+]   * After installation has completed reboot the Raspberry Pi." ${STD_LOG_ARG}
-  eval echo "[+]   * With another device, connect to the SSID." ${STD_LOG_ARG}
-}
-
-# Set logging on
-set_logging()
-{
-  echo "[+] Running with logging option..."
-  STD_LOG_ARG=">>${LOG_PATH}/${STD_LOG}"
+  echo "[+] The media-portal-badge is now almost complete. To complete installation perform the following:"
+  echo "[+]   Insert the microSD card into the Raspberry Pi."
+  echo "[+]   Power on the Raspberry Pi."
+  echo "[+]   ssh -i [path to private key] pi@[hostname].local"
+  echo "[+]   (RPi) sudo su - "
+  echo "[+]   (RPi) raspi-config"
+  echo "[+]   * (RPi) Update the keymap/locale (likely US)."
+  echo "[+]   * (RPi) Update the pi user's password."
+  echo "[+]   * (RPi) cd /home/pi/media-portal-badge/bin && ./install.sh"
+  echo "[+]   * After installation has completed reboot the Raspberry Pi."
+  echo "[+]   * With another device, connect to the SSID."
 }
 
 # Display usage information
 usage()
 {
-  echo "Usage: [Environment Variables] ./deploy.sh [-hL]"
+  echo "Usage: [Environment Variables] ./deploy.sh [-h]"
   echo "  Environment Variables:"
-  echo "    LOG_PATH               path for logs (default: '.')"
   echo "    RANDOM_MEDIA_PORTAL    HTTP clone target for the random-media-portal (default: https://gitlab.com/frozenfoxx/random-media-portal.git)"
   echo "  Options:"
   echo "    -h | --help            display this usage information"
-  echo "    -L | --Log             enable logging (target: '[LOG_PATH]/media_portal_badge_deployment.log')"
 }
 
 # Logic
@@ -135,8 +123,6 @@ usage()
 # Argument parsing
 while [ "$1" != "" ]; do
   case $1 in
-    -L | --Log )  set_logging
-                  ;;
     -h | --help ) usage
                   exit 0
   esac
