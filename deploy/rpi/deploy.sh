@@ -3,7 +3,7 @@
 # Variables
 PLATFORM=$(uname -s)
 MYUSER=$(whoami)
-RANDOM_MEDIA_PORTAL=${RANDOM_MEDIA_PORTAL:-"https://gitlab.com/frozenfoxx/random-media-portal.git"}
+MEDIA_PORTAL_BADGE=${MEDIA_PORTAL_BADGE:-"https://gitlab.com/frozenfoxx/media-portal-badge.git"}
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # Functions
@@ -87,9 +87,9 @@ deploy_data()
 # Clone the media-portal-badge code onto the system
 deploy_media_portal_badge()
 {
-  echo "[+] Cloning latest random-media-portal..."
+  echo "[+] Cloning latest media-portal-badge..."
 
-  git clone ${RANDOM_MEDIA_PORTAL} /media/${MYUSER}/rootfs/home/pi/random-media-portal
+  git clone ${MEDIA_PORTAL_BADGE} /media/${MYUSER}/rootfs/home/pi/media-portal-badge
 }
 
 # Show the user what must be done next
