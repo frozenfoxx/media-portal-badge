@@ -104,7 +104,7 @@ display_further_instructions()
   echo "[+]   * (RPi) Update the keymap/locale (likely US)."
   echo "[+]   * (RPi) Update the pi user's password."
   echo "[+]   (RPi) Logout, relogin."
-  echo "[+]   (RPi) cd /home/pi/media-portal-badge/bin && ./install.sh"
+  echo "[+]   (RPi) cd /home/pi/media-portal-badge/bin && sudo ./install.sh"
   echo "[+]   After installation has completed reboot the Raspberry Pi."
   echo "[+]   With another device, connect to the SSID."
 }
